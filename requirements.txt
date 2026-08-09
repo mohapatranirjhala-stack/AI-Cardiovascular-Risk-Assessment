@@ -76,7 +76,7 @@ gto==1.10.1
 gunicorn==26.0.0
 h11==0.16.0
 # Editable install with no version control (HeartDiseasePrediction==0.0.1)
--e c:\users\hp\downloads\ai-cardiovascular-risk-assessment\ai-cardiovascular-risk-assessment
+
 httpcore==1.0.9
 httplib2==0.32.0
 httpx==0.28.1
