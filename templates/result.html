@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Cardiovascular Assessment Report</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================= Header ================= -->
+
+    <div class="header">
+
+        <h1>🫀 AI Cardiovascular Risk Assessment</h1>
+
+        <p>AI-Powered Clinical Decision Support System</p>
+
+    </div>
+    <div class="theme-toggle-container">
+
+    <button
+        type="button"
+        id="darkModeToggle"
+        class="dark-mode-btn">
+
+        🌙 Dark Mode
+
+    </button>
+
+</div>
+
+
+    <!-- ================= Patient Summary ================= -->
+
+    <div class="hero-card">
+
+        <h2>Patient Assessment Summary</h2>
+
+        <p>
+
+            This report has been generated using an AI-powered
+            Machine Learning model for cardiovascular disease
+            risk prediction.
+
+        </p>
+
+    </div>
+
+
+    <!-- ================= Prediction Result ================= -->
+
+    <div class="result">
+
+        {% if prediction == 0 %}
+
+            <h2 style="color:#2E7D32;">
+
+                🟢 LOW CARDIOVASCULAR RISK
+
+            </h2>
+
+            <p>
+
+                The patient currently appears to have a lower
+                likelihood of cardiovascular disease.
+
+            </p>
+
+        {% else %}
+
+            <h2 style="color:#C62828;">
+
+                🔴 HIGH CARDIOVASCULAR RISK
+
+            </h2>
+
+            <p>
+
+                The patient appears to have an increased
+                cardiovascular risk. Clinical evaluation is
+                recommended.
+
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    <br>
+
+<!-- ================= Dashboard Metrics ================= -->
+
+<div class="hero-card">
+
+    <h2>📊 AI Prediction Dashboard</h2>
+
+    <p>
+
+        The AI model analyzes multiple clinical parameters to
+        estimate the patient's cardiovascular disease risk.
+
+    </p>
+
+    <br>
+
+    <div class="metrics-grid">
+
+        <!-- ================= Risk Level ================= -->
+
+        <div class="metric-card">
+
+            <h3>❤️ Risk Level</h3>
+
+            {% if risk_level == "High" %}
+
+                <span class="badge high">HIGH</span>
+
+            {% elif risk_level == "Moderate" %}
+
+                <span class="badge medium">MODERATE</span>
+
+            {% else %}
+
+                <span class="badge low">LOW</span>
+
+            {% endif %}
+
+            <div class="metric-label">
+
+                Overall AI Risk Classification
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= Prediction ================= -->
+
+        <div class="metric-card">
+
+            <h3>📈 Prediction</h3>
+
+            <div class="metric-value">
+
+                {{ probability }}%
+
+            </div>
+
+            <progress
+                value="{{ probability }}"
+                max="100"
+                class="progress-bar">
+            </progress>
+
+            <div class="metric-label">
+
+                Probability of Heart Disease
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= Confidence ================= -->
+
+        <div class="metric-card">
+
+            <h3>🤖 Confidence</h3>
+
+            <div class="metric-value">
+
+                {{ confidence }}%
+
+            </div>
+
+            <progress
+                value="{{ confidence }}"
+                max="100"
+                class="progress-bar">
+            </progress>
+
+            <div class="metric-label">
+
+                Model Confidence Score
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= BMI ================= -->
+
+        <div class="metric-card">
+
+            <h3>⚖️ BMI</h3>
+
+            <div class="metric-value">
+
+                {{ bmi }}
+
+            </div>
+
+            <div class="metric-label">
+
+                {{ bmi_category }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= Heart Risk Gauge ================= -->
+
+    <div class="risk-gauge-section">
+
+        <h3>❤️ Cardiovascular Risk Gauge</h3>
+
+        <p class="gauge-description">
+
+            Visual representation of the cardiovascular risk
+            probability estimated by the machine learning model.
+
+        </p>
+
+        <div class="risk-gauge">
+
+            <div
+                class="gauge-fill"
+                style="--risk: {{ probability }}%;">
+            </div>
+
+            <div class="gauge-center">
+
+                <div class="gauge-value">
+
+                    {{ probability }}%
+
+                </div>
+
+                <div class="gauge-label">
+
+                    Risk Score
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="gauge-scale">
+
+            <span>Low</span>
+
+            <span>Moderate</span>
+
+            <span>High</span>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+<!-- ================= Clinical Indicators ================= -->
+
+<div class="hero-card">
+
+    <h2>🩺 Clinical Health Indicators</h2>
+
+    <p>
+
+        The following patient health indicators are calculated
+        from the submitted clinical information and assist the
+        AI model in assessing cardiovascular risk.
+
+    </p>
+
+    <hr>
+
+    <table class="feature-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Clinical Parameter</th>
+
+                <th>Current Status</th>
+
+                <th>Interpretation</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td><strong>Body Mass Index (BMI)</strong></td>
+
+                <td>{{ bmi }}</td>
+
+                <td>{{ bmi_category }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td><strong>Blood Pressure</strong></td>
+
+                <td>{{ bp_category }}</td>
+
+                <td>
+
+                    {% if bp_category == "Normal" %}
+
+                        Healthy Blood Pressure
+
+                    {% elif bp_category == "Elevated" %}
+
+                        Lifestyle Modification Recommended
+
+                    {% elif bp_category == "Stage 1 Hypertension" %}
+
+                        Medical Monitoring Recommended
+
+                    {% else %}
+
+                        Immediate Clinical Attention Recommended
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td><strong>Cholesterol</strong></td>
+
+                <td>{{ chol_category }}</td>
+
+                <td>
+
+                    {% if chol_category == "Normal" %}
+
+                        Healthy Cholesterol Level
+
+                    {% elif chol_category == "Borderline High" %}
+
+                        Dietary Changes Recommended
+
+                    {% else %}
+
+                        High Cardiovascular Risk Factor
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <div class="insight">
+
+        <strong>Clinical Insight</strong>
+
+        <br><br>
+
+        These indicators provide an overview of the patient's
+        cardiovascular health. While they are valuable inputs
+        for the AI prediction model, they should always be
+        interpreted alongside a complete clinical evaluation by
+        a qualified healthcare professional.
+
+    </div>
+
+</div>
+
+<br>
+
+    <!-- ================= Explainable AI ================= -->
+
+    <div class="hero-card">
+
+        <h2>🧠 Explainable AI (SHAP)</h2>
+
+        <hr>
+
+        <p>
+
+            The visualization below explains which clinical
+            parameters contributed most to the AI prediction.
+
+        </p>
+
+        <img
+
+            src="{{ url_for('static', filename=shap_image) }}"
+
+            class="shap-image"
+
+            alt="SHAP Waterfall Plot"
+
+        >
+
+        <br><br>
+
+        <h3>Top Contributing Features</h3>
+
+        <table class="feature-table">
+
+            <tr>
+
+                <th>Feature</th>
+
+                <th>Value</th>
+
+                <th>Impact</th>
+
+                <th>Contribution</th>
+
+            </tr>
+
+            {% for item in top_features %}
+
+            <tr>
+
+                <td>{{ item.feature }}</td>
+
+                <td>{{ item.value }}</td>
+
+                <td>{{ item.impact }}</td>
+
+                <td>{{ item.direction }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <div class="insight">
+
+            <strong>AI Interpretation</strong>
+
+            <br><br>
+
+            Positive SHAP values indicate features that increased
+            the predicted cardiovascular risk, while negative
+            SHAP values indicate features that reduced the
+            predicted risk.
+
+            The feature importance ranking helps clinicians
+            understand why the model reached its decision.
+
+        </div>
+
+    </div>
+
+    <br>
+
+
+    <!-- ================= Recommendation ================= -->
+
+    <div class="hero-card">
+
+        <h2>📋 AI Clinical Recommendation</h2>
+
+        <hr>
+
+        {% if prediction == 0 %}
+
+        <ul>
+
+            <li>Maintain a healthy body weight.</li>
+
+            <li>Exercise at least 150 minutes every week.</li>
+
+            <li>Consume a balanced diet rich in fruits and vegetables.</li>
+
+            <li>Avoid smoking and excessive alcohol intake.</li>
+
+            <li>Schedule regular cardiovascular screening.</li>
+
+        </ul>
+
+        {% else %}
+
+        <ul>
+
+            <li>Consult a cardiologist for further evaluation.</li>
+
+            <li>Monitor blood pressure regularly.</li>
+
+            <li>Reduce sodium and saturated fat intake.</li>
+
+            <li>Maintain regular physical activity.</li>
+
+            <li>Follow prescribed medications as advised.</li>
+
+            <li>Schedule periodic cardiac investigations.</li>
+
+        </ul>
+
+        {% endif %}
+
+    </div>
+
+    <br>
+    <!-- ================= AI Personalized Care Plan ================= -->
+
+<div class="hero-card">
+
+    <h2>🤖 Personalized AI Care Plan</h2>
+
+    <hr>
+
+    <p>
+        This personalized care plan has been generated using an
+        AI model based on your cardiovascular assessment,
+        clinical indicators and predicted risk level.
+    </p>
+
+    <div class="ai-plan">
+
+        {{ ai_care_plan|safe }}
+
+    </div>
+
+</div>
+
+<br>
+
+
+<!-- ================= Intelligent Clinical Summary ================= -->
+
+<div class="hero-card clinical-summary-card">
+
+    <h2>🩺 Intelligent Clinical Summary</h2>
+
+    <hr>
+
+    <p>
+        This summary provides a concise interpretation of the
+        machine learning prediction, cardiovascular risk level,
+        clinical indicators and explainability results.
+    </p>
+
+    <div class="clinical-summary">
+
+        {{ clinical_summary|safe }}
+
+    </div>
+
+</div>
+
+<br>
+<!-- ================= Risk Trend ================= -->
+
+<div class="hero-card risk-trend-card">
+
+    <h2>📈 Cardiovascular Risk Trend</h2>
+
+    <hr>
+
+    <p>
+
+        This chart shows the cardiovascular risk probability
+        recorded across your recent assessments.
+
+    </p>
+
+    {% if risk_history %}
+
+        <div class="risk-chart-container">
+
+            <canvas
+                id="riskTrendChart"
+                data-history='{{ risk_history | tojson | safe }}'>
+            </canvas>
+
+        </div>
+
+        <div class="risk-history-table">
+
+    <h3>Recent Assessment History</h3>
+
+    <table class="feature-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Assessment</th>
+
+                <th>Date</th>
+
+                <th>Risk Probability</th>
+
+                <th>Risk Level</th>
+
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for item in risk_history|reverse %}
+
+            <tr>
+
+                <td>
+                    {{ loop.index }}
+                </td>
+
+                <td>
+                    {{ item.date }}
+                </td>
+
+                <td>
+                    {{ item.probability }}%
+                </td>
+
+                <td>
+
+                    {% if item.risk_level == "High" %}
+
+                        <span class="badge high">
+                            HIGH
+                        </span>
+
+                    {% elif item.risk_level == "Moderate" %}
+
+                        <span class="badge medium">
+                            MODERATE
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge low">
+                            LOW
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('delete_risk_history', index=loop.revindex0) }}"
+                        onsubmit="return confirm('Are you sure you want to delete this assessment history?');"
+                        style="margin:0;">
+
+                        <button
+                            type="submit"
+                            class="delete-history-btn">
+
+                            🗑️ Delete
+
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+    {% else %}
+
+        <div class="insight">
+
+            No previous assessment history is available yet.
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+<br>
+</div>
+
+   <div class="action-buttons">
+
+    <a href="{{ url_for('download_report', filename=pdf_file) }}">
+        <button class="secondary-btn">
+            📄 Download Medical Report
+        </button>
+    </a>
+
+    <button
+        class="email-btn"
+        onclick="openEmailDialog()">
+        📧 Email PDF Report
+    </button>
+
+    <a href="/">
+        <button class="primary-btn">
+            🔄 Assess Another Patient
+        </button>
+    </a>
+
+</div>
+<!-- ================= Email Report Dialog ================= -->
+
+<div id="emailDialog" class="email-dialog">
+
+    <div class="email-box">
+
+        <h2>📧 Email PDF Report</h2>
+
+        <p>
+            Enter the email address where you want to receive
+            the cardiovascular assessment report.
+        </p>
+
+        <input
+            type="email"
+            id="receiverEmail"
+            placeholder="Enter email address"
+            required
+        >
+
+        <div class="email-actions">
+
+            <button
+                class="email-send-btn"
+                onclick="sendEmailReport()">
+                📤 Send Report
+            </button>
+
+            <button
+                class="email-cancel-btn"
+                onclick="closeEmailDialog()">
+                Cancel
+            </button>
+
+        </div>
+
+        <p id="emailStatus"></p>
+
+    </div>
+
+</div>
+
+
+
+<div class="chatbot">
+
+    <div class="chat-header">
+        🤖 AI Health Assistant
+    </div>
+
+    <div class="chat-body" id="chatBody">
+
+        <div class="message bot-message">
+
+            Hello 👋
+
+            I can explain your cardiovascular report.
+
+            You can ask things like:
+
+            • Why is my risk high?
+
+            • Explain BMI.
+
+            • Explain cholesterol.
+
+            • How can I reduce my risk?
+
+        </div>
+
+    </div>
+
+    <div class="chat-input">
+
+    <input
+        id="question"
+        type="text"
+        placeholder="Ask anything about this report..."
+    >
+
+    <button
+        id="voiceBtn"
+        type="button"
+        title="Speak your question">
+        🎤
+    </button>
+
+    <button
+        id="sendBtn"
+        type="button">
+        Ask AI
+    </button>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="{{ url_for('static', filename='assistant.js') }}"></script>
+<script src="{{ url_for('static', filename='dark_mode.js') }}"></script>
+<script src="{{ url_for('static', filename='risk_trend.js') }}"></script>
+<script src="{{ url_for('static', filename='email_report.js') }}"></script>
+<script>
+
+async function deleteAssessment(index) {
+
+    const confirmed = confirm(
+        "Are you sure you want to delete this assessment?"
+    );
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+    try {
+
+        const response = await fetch(
+            `/delete-risk/${index}`,
+            {
+                method: "POST"
+            }
+        );
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            // Refresh page so chart and history update
+            window.location.reload();
+
+        } else {
+
+            alert(
+                "Unable to delete assessment: " +
+                data.message
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Delete error:",
+            error
+        );
+
+        alert(
+            "An error occurred while deleting the assessment."
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

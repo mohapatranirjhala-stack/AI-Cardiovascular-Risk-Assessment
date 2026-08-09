@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Cardiovascular Risk Assessment</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- ================= Header ================= -->
+
+        <div class="header">
+
+            <h1>🫀 AI Cardiovascular Risk Assessment</h1>
+
+            <p>
+                AI-Powered Clinical Decision Support System for Early Cardiovascular Risk Prediction
+            </p>
+
+        </div>
+
+        <!-- ================= Intro Card ================= -->
+
+        <div class="hero-card">
+
+            <h2>Patient Clinical Assessment</h2>
+
+            <p>
+
+                Complete the patient's demographic and clinical information below.
+                The AI model will estimate cardiovascular disease risk and generate
+                a clinical assessment report.
+
+            </p>
+
+        </div>
+
+        <form method="POST">
+
+            <!-- ================= Patient Information ================= -->
+
+            <div class="section-title">
+
+                <h2>👤 Patient Information</h2>
+
+            </div>
+
+            <label>Age</label>
+
+            <input
+                type="number"
+                name="age"
+                placeholder="Enter Age"
+                required
+            >
+
+            <label>Sex</label>
+
+            <select name="sex" required>
+
+                <option value="">Select</option>
+
+                <option value="1">Male</option>
+
+                <option value="0">Female</option>
+
+            </select>
+
+            <label>Height (cm)</label>
+
+            <input
+                type="number"
+                name="height"
+                placeholder="170"
+                required
+            >
+
+            <label>Weight (kg)</label>
+
+            <input
+                type="number"
+                step="0.1"
+                name="weight"
+                placeholder="70"
+                required
+            >
+
+            <!-- ================= Clinical Parameters ================= -->
+
+            <div class="section-title">
+
+                <h2>🩺 Clinical Parameters</h2>
+
+            </div>
+
+            <label>Chest Pain Type</label>
+
+            <select name="cp" required>
+
+                <option value="0">Typical Angina</option>
+
+                <option value="1">Atypical Angina</option>
+
+                <option value="2">Non-Anginal Pain</option>
+
+                <option value="3">Asymptomatic</option>
+
+            </select>
+
+            <label>Resting Blood Pressure (mm Hg)</label>
+
+            <input
+                type="number"
+                name="trestbps"
+                required
+            >
+
+            <label>Serum Cholesterol (mg/dl)</label>
+
+            <input
+                type="number"
+                name="chol"
+                required
+            >
+
+            <label>Fasting Blood Sugar</label>
+
+            <select name="fbs" required>
+
+                <option value="0">≤ 120 mg/dl</option>
+
+                <option value="1">> 120 mg/dl</option>
+
+            </select>
+
+            <label>Resting ECG</label>
+
+            <select name="restecg" required>
+
+                <option value="0">Normal</option>
+
+                <option value="1">ST-T Wave Abnormality</option>
+
+                <option value="2">Left Ventricular Hypertrophy</option>
+
+            </select>
+
+            <label>Maximum Heart Rate</label>
+
+            <input
+                type="number"
+                name="thalach"
+                required
+            >
+
+            <label>Exercise Induced Angina</label>
+
+            <select name="exang" required>
+
+                <option value="0">No</option>
+
+                <option value="1">Yes</option>
+
+            </select>
+
+            <label>Oldpeak</label>
+
+            <input
+                type="number"
+                step="0.1"
+                name="oldpeak"
+                required
+            >
+
+            <label>Slope of ST Segment</label>
+
+            <select name="slope" required>
+
+                <option value="0">Upsloping</option>
+
+                <option value="1">Flat</option>
+
+                <option value="2">Downsloping</option>
+
+            </select>
+
+            <label>Major Vessels (CA)</label>
+
+            <select name="ca" required>
+
+                <option value="0">0</option>
+
+                <option value="1">1</option>
+
+                <option value="2">2</option>
+
+                <option value="3">3</option>
+
+            </select>
+
+            <label>Thalassemia</label>
+
+            <select name="thal" required>
+
+                <option value="0">Normal</option>
+
+                <option value="1">Fixed Defect</option>
+
+                <option value="2">Reversible Defect</option>
+
+            </select>
+
+            <!-- ================= Submit ================= -->
+
+            <button type="submit">
+
+                🩺 Analyze Cardiovascular Risk
+
+            </button>
+
+        </form>
+        
+        <!-- ================= Batch CSV Navigation ================= -->
+
+<div class="batch-navigation">
+
+    <div>
+        <h3>📊 Batch Patient Prediction</h3>
+
+        <p>
+            Need to analyze multiple patients at once?
+            Upload a CSV file for batch cardiovascular risk prediction.
+        </p>
+    </div>
+
+    <a href="{{ url_for('batch_prediction') }}"
+       class="batch-navigation-btn">
+
+        📊 Open Batch Prediction
+
+    </a>
+
+</div>
+
+    </div>
+
+</body>
+
+</html>

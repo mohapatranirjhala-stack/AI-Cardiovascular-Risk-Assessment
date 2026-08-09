@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Batch Cardiovascular Risk Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================= Header ================= -->
+
+    <div class="header">
+
+        <h1>📊 Batch Cardiovascular Risk Prediction</h1>
+
+        <p>
+            Analyze multiple patient records using a CSV file
+            and the AI cardiovascular risk prediction model.
+        </p>
+
+    </div>
+
+
+    <!-- ================= Information ================= -->
+
+    <div class="hero-card">
+
+        <h2>📁 Upload Patient Dataset</h2>
+
+        <p>
+
+            Upload a CSV file containing multiple patient
+            records. The AI model will analyze each patient
+            and generate a cardiovascular risk prediction.
+
+        </p>
+
+        <br>
+
+        <div class="insight">
+
+            <strong>Important:</strong>
+
+            Make sure your CSV contains the required clinical
+            columns and follows the provided template.
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= CSV Upload ================= -->
+
+    <div class="hero-card">
+
+        <h2>📤 Upload CSV File</h2>
+
+        <form
+            action="{{ url_for('batch_prediction') }}"
+            method="POST"
+            enctype="multipart/form-data">
+
+            <label for="csv_file">
+                Select CSV File
+            </label>
+
+            <input
+                type="file"
+                id="csv_file"
+                name="csv_file"
+                accept=".csv"
+                required>
+
+            <br><br>
+
+            <button type="submit">
+                🔍 Analyze Patients
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- ================= Template Download ================= -->
+
+    <div class="hero-card">
+
+        <h2>📋 CSV Template</h2>
+
+        <p>
+
+            Not sure about the required CSV format?
+            Download the sample template first.
+
+        </p>
+
+        <br>
+
+        <a
+            href="{{ url_for('download_csv_template') }}"
+            class="batch-link">
+
+            📥 Download CSV Template
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= Results ================= -->
+
+    {% if results %}
+
+    <div class="hero-card">
+
+        <h2>📊 Batch Prediction Results</h2>
+
+        <p>
+
+            Successfully analyzed
+            <strong>{{ results|length }}</strong>
+            patient records.
+
+        </p>
+
+        <br>
+
+        <div style="overflow-x:auto;">
+
+            <table class="feature-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Patient</th>
+                        <th>Risk Probability</th>
+                        <th>Risk Level</th>
+                        <th>Prediction</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for item in results %}
+
+                    <tr>
+
+                        <td>
+                            {{ loop.index }}
+                        </td>
+
+                        <td>
+                            {{ item.probability }}%
+                        </td>
+
+                        <td>
+
+                            {% if item.risk_level == "High" %}
+
+                                <span class="badge high">
+                                    HIGH
+                                </span>
+
+                            {% elif item.risk_level == "Moderate" %}
+
+                                <span class="badge medium">
+                                    MODERATE
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge low">
+                                    LOW
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if item.prediction == 1 %}
+
+                                🔴 High Risk
+
+                            {% else %}
+
+                                🟢 Low Risk
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <br>
+
+        <a
+            href="{{ url_for('download_batch_results') }}"
+            class="batch-link">
+
+            📥 Download Results CSV
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- ================= Navigation ================= -->
+
+    <div class="action-buttons">
+
+        <a href="/">
+
+            <button class="primary-btn">
+
+                ← Manual Assessment
+
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
