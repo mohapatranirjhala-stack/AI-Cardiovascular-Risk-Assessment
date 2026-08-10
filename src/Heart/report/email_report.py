@@ -53,7 +53,8 @@ AI Cardiovascular Risk Assessment System
 
         with smtplib.SMTP_SSL(
             "smtp.gmail.com",
-            465
+            465,
+            timeout=30
         ) as smtp:
 
             smtp.login(
