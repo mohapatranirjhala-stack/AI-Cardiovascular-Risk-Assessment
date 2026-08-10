@@ -139,7 +139,7 @@ pyparsing==3.3.2
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
 pytz==2024.2
-pywin32==312
+
 PyYAML==6.0.3
 pyzmq==27.1.0
 querystring-parser==1.2.4
