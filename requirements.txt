@@ -75,7 +75,7 @@ grpcio-status==1.71.2
 gto==1.10.1
 gunicorn==26.0.0
 h11==0.16.0
--e git+https://github.com/mohapatranirjhala-stack/AI-Cardiovascular-Risk-Assessment@18f90a584d684bb09bf5e0de2a14adee38c79667#egg=HeartDiseasePrediction
+
 httpcore==1.0.9
 httplib2==0.32.0
 httpx==0.28.1
