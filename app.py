@@ -306,6 +306,12 @@ def home():
                 shap_image=shap_result["image"]
 
             )
+            print("======================================")
+            print("PDF GENERATOR RETURN VALUE:")
+            print(pdf_file)
+            print("PDF RETURN TYPE:")
+            print(type(pdf_file))
+            print("======================================")
 
             print("✓ PDF Report Generated")
             
@@ -516,7 +522,7 @@ def email_report():
 
     try:
 
-        data = request.get_json()
+        data = request.get_json(silent=True) or {}
 
         receiver_email = data.get("email")
 
@@ -526,6 +532,14 @@ def email_report():
                 "success": False,
                 "message": "Please enter an email address."
             }), 400
+
+        # Debug information
+        print("======================================")
+        print("EMAIL REPORT DEBUG")
+        print("Receiver Email:", receiver_email)
+        print("Latest Report:", latest_report)
+        print("PDF File:", latest_report.get("pdf_file"))
+        print("======================================")
 
         if not latest_report:
 
@@ -540,7 +554,7 @@ def email_report():
 
             return jsonify({
                 "success": False,
-                "message": "PDF report is not available."
+                "message": "PDF report file name is missing."
             }), 400
 
         pdf_path = os.path.join(
@@ -548,6 +562,15 @@ def email_report():
             "reports",
             pdf_file
         )
+
+        print("PDF Path:", pdf_path)
+
+        if not os.path.exists(pdf_path):
+
+            return jsonify({
+                "success": False,
+                "message": "PDF report file was not found on the server."
+            }), 404
 
         sender = EmailReportSender()
 
@@ -563,7 +586,10 @@ def email_report():
 
     except Exception as e:
 
-        print("Email Report Error:", e)
+        print("======================================")
+        print("EMAIL REPORT ERROR")
+        print(e)
+        print("======================================")
 
         return jsonify({
             "success": False,
