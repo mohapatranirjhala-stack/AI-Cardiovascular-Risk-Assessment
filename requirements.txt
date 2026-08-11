@@ -37,13 +37,7 @@ distro==1.9.0
 docker==7.2.0
 dpath==2.2.0
 dulwich==1.2.12
-dvc==3.67.1
-dvc-data==3.18.3
-dvc-http==2.32.0
-dvc-objects==5.2.0
-dvc-render==1.0.2
-dvc-studio-client==0.23.0
-dvc-task==0.40.2
+
 entrypoints==0.4
 executing==2.2.1
 filelock==3.32.2
@@ -102,7 +96,7 @@ MarkupSafe==3.0.3
 matplotlib==3.11.1
 matplotlib-inline==0.2.2
 mdurl==0.1.2
-mlflow==2.12.2
+
 multidict==6.7.1
 narwhals==2.24.0
 nest-asyncio2==1.7.2
